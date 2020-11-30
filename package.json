@@ -1,0 +1,28 @@
+{
+  "name": "web-synthese",
+  "version": "1.0.0",
+  "description": "",
+  "main": "serveur.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eti246/ServeurAndromia.git"
+  },
+  "keywords": [
+    "Serveur",
+    "node"
+  ],
+  "author": "Etienne Desrochers",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eti246/ServeurAndromia/issues"
+  },
+  "homepage": "https://github.com/eti246/ServeurAndromia#readme",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.19"
+  }
+}
