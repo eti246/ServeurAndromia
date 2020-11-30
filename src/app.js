@@ -29,6 +29,7 @@ app.use('/andromia /deconnexion',deconectionRoute)
 app.use('/monster',monsterRoute)
 app.use('/explorations',explorationRoute)
 app.use('/elements',elementsRoute)
+app.use('/portal',portalRoute)
 app.use('*', errors);
 
 export default app;
