@@ -14,7 +14,6 @@ import deconectionRoute from "./routes/deconectionroute.js"
 import elementsRoute from "./routes/elementsroute.js"
 import explorationRoute from "./routes/explorationroute.js"
 import monsterRoute from "./routes/monsterroute.js"
-import portalRoute from "./routes/portalroute.js"
 const app = express();
 database(app);
 
@@ -29,7 +28,6 @@ app.use('/andromia /deconnexion',deconectionRoute)
 app.use('/monster',monsterRoute)
 app.use('/explorations',explorationRoute)
 app.use('/elements',elementsRoute)
-app.use('/portal',portalRoute)
 app.use('*', errors);
 
 export default app;
