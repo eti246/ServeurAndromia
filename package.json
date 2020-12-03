@@ -1,9 +1,12 @@
 {
   "name": "web-synthese",
   "version": "1.0.0",
-  "description": "",
+  "description": "TP FINAL WEB",
   "main": "serveur.js",
+  "type": "module",
   "scripts": {
+    "start": "node server.js",
+    "start:dev": "nodemon server.js --inspect",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,7 +25,12 @@
   "homepage": "https://github.com/eti246/ServeurAndromia#readme",
   "dependencies": {
     "chalk": "^4.1.0",
+    "dotenv-flow": "^3.2.0",
     "express": "^4.17.1",
-    "mongoose": "^5.10.19"
+    "express-paginate": "^1.0.2",
+    "http-errors": "^1.8.0",
+    "lodash": "^4.17.20",
+    "mongoose": "^5.10.19",
+    "nodemon": "^2.0.6"
   }
 }

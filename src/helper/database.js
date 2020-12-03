@@ -14,7 +14,7 @@ export default app => {
     mongoose.set('useUnifiedTopology', true);
 
     // connection à la base de données
-    mongoose.connect(url).then(
-        () => { console.log(chalk.green(`[MONGO] - Connected to: ${url}`)); }
-    );
+    //mongoose.connect(url).then(
+    //    () => { console.log(chalk.green(`[MONGO] - Connected to: ${url}`)); }
+    //);
 }

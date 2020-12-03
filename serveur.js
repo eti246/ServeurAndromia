@@ -14,4 +14,4 @@ app.listen(PORT, err=>{
     //Affiche l'information que le serveur est bien actif
     console.log(chalk.blue(`Serveur en écoute sur le port: ${PORT}`));
 
-});npm
+});
