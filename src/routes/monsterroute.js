@@ -13,6 +13,7 @@ class MonsterRoute
 
     async getAll(req,res,next)
     {
+        
         let temp =[]
         let t =
         {
