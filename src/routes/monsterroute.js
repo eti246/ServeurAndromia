@@ -21,7 +21,6 @@ class MonsterRoute
             
             let temp = await MonsterService.getOne(req.params.idMonster,{})
             temp.href =temp.href =`${process.env.BASE_URL}/monster/one/${temp._id}`
-            console.log(temp)
             res.status(200).json(temp)
         }
         catch (e)
