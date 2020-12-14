@@ -3,7 +3,7 @@
 // Date : 30 novembre 2020
 
 import express from 'express';
-
+import cors from 'cors';
 import database from './helper/database.js'
 import errors from './helper/error.js';
 
@@ -13,9 +13,10 @@ import elementsRoute from "./routes/elementsroute.js"
 import explorationRoute from "./routes/explorationroute.js"
 import monsterRoute from "./routes/monsterroute.js"
 import portalRoute from "./routes/portalroute.js"
+
 const app = express();
 database(app);
-
+app.use(cors());
 //Pour comprendre le json
 app.use(express.json());
 

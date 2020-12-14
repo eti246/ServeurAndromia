@@ -13,8 +13,8 @@ export default app => {
     mongoose.set('useCreateIndex', true);
     mongoose.set('useUnifiedTopology', true);
 
-    // connection à la base de données
-    //mongoose.connect(url).then(
-    //    () => { console.log(chalk.green(`[MONGO] - Connected to: ${url}`)); }
-    //);
+    //connection à la base de données
+    mongoose.connect(url).then(
+        () => { console.log(chalk.green(`[MONGO] - Connected to: ${url}`)); }
+    );
 }
