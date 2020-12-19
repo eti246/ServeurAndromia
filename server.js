@@ -23,10 +23,10 @@ import cron from 'node-cron';
    });
    
     
-    
-    cron.schedule('0 */1 * * *', function(){
-    console.log("heure");
+   cron.schedule(' 0 */1 * * *', async function(){ 
     // fucntion a toute les heures
+    console.log("heure");
+    const account = await accountService.giveElement(); 
     })
     
     

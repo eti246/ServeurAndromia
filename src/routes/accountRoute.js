@@ -26,7 +26,8 @@ async post(req, res, next) {
         account = account.toObject({ getters: false, virtuals: false });
         account = accountService.transform(account);
         account.accessToken = accessToken;
-
+       
+        
         res.status(201).json(account);
     } catch (err) {
         return next(httpErrors.InternalServerError(err));
@@ -64,12 +65,11 @@ async refreshToken(req, res, next) {
 }
 
 async logout(req, res, next) {
-    console.log(req);
- 
+
     try {
 
         await accountService.logout(req.user.email);
-        console.log(1);
+
         res.status(204).end();
     } catch (err) {
         return next(httpErrors.InternalServerError());

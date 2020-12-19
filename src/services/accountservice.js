@@ -7,6 +7,16 @@ import expressJWT from 'express-jwt';
 import jwt from 'jsonwebtoken';
 import httpErrors from 'http-errors';
 import Accounts from '../models/account.js';
+import account from '../models/account.js';
+import  lodash from 'lodash';
+
+
+const elements = [{name :"A", quantity: 0 },{name :"B", quantity: 0 } ,{name :"E", quantity: 0 }
+        ,{name :"Ex", quantity: 0 },{name :"Fr", quantity: 0 },{name :"G", quantity: 0 }
+        ,{name :"I", quantity: 0 },{name :"Ja", quantity: 0 },{name :"K", quantity: 0 }
+        ,{name :"L", quantity: 0 },{name :"No", quantity: 0 },{name :"Q", quantity: 0 }
+        ,{name :"Sm", quantity: 0 },{name :"Ve", quantity: 0 },{name :"Wu", quantity: 0 }
+        ,{name :"Xu", quantity: 0 },{name :"Ye", quantity: 0 },{name :"Z", quantity: 0 }];
 
 class AccountServices {
     async login(email, password) {
@@ -35,6 +45,21 @@ class AccountServices {
        return account;
     }
 
+    async giveElement() {
+        const Listaccount = await Accounts.find();
+    
+        Listaccount.forEach(account => {
+
+            (account.element).forEach(element => {
+                
+              let rnd = lodash.random(2,5);
+                element.quantity += rnd;
+            });        
+            account.save();
+            });        
+           return account;
+        }
+
     validatePassword(password, account) {
         //Validate de password with hash
         const iteration = parseInt(process.env.HASH_ITERATION, 10);
@@ -46,14 +71,17 @@ class AccountServices {
 
     create(account) {
         //Generate salt
+   
         account.salt = crypto.randomBytes(16).toString('base64');
         //Generate hash
         const hrstart = process.hrtime();
         const iteration = parseInt(process.env.HASH_ITERATION, 10);
-   
+        
+        account.element = elements;
         account.hash = crypto.pbkdf2Sync(account.password, account.salt, iteration, 64, 'sha512').toString('base64');
         const hrEnd = process.hrtime(hrstart);
-        console.info('Execution time (iteration - %d): %ds %dms', iteration, hrEnd[0], hrEnd[1] / 1000000);
+        //console.info('Execution time (iteration - %d): %ds %dms', iteration, hrEnd[0], hrEnd[1] / 1000000);
+   
         return Accounts.create(account);
     }
 
@@ -89,7 +117,6 @@ class AccountServices {
         //Do some logic cleanup
         delete account.salt;
         delete account.hash;
-
         delete account._id;
         delete account.__v;
 
