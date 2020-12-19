@@ -1,24 +1,30 @@
 // But : Programmation des routes pour les fonctionnalités de la connection.
 // Auteur :  Martyn Gagné côté
 // Date : 1 décembre 2020
+import express from 'express';
+import expressJWT from 'express-jwt';
+import httpErrors from 'http-errors';
+import accountService from '../services/accountService.js';
+
+const router = express.Router();
 
 class AccountsRoutes {
 constructor() {
     router.post('/creationCompte', this.post);
-    router.post('/connexion', this.login);
-    router.post('/refresh', authenticateRefreshJWT, this.refreshToken); //Pas une route secure, le token est expiré
+    router.post('/', this.login);
+    router.post('/refresh', this.refreshToken); //Pas une route secure, le token est expiré
    // router.get('/secure', authenticateJWT, this.secure);
-    router.delete('/deconnexion', authenticateJWT, this.logout);
+    router.delete('/deconnexion' ,this.logout);
 }
 
 async post(req, res, next) {
     try {
-        let account = await accountServices.create(req.body);
+        let account = await accountService.create(req.body);
         //Generate Access Token (JWT)
-        const { accessToken } = accountServices.generateJWT(account);
+        const { accessToken } = accountService.generateJWT(account);
 
         account = account.toObject({ getters: false, virtuals: false });
-        account = accountServices.transform(account);
+        account = accountService.transform(account);
         account.accessToken = accessToken;
 
         res.status(201).json(account);
@@ -30,12 +36,12 @@ async post(req, res, next) {
 
 async login(req, res, next) {
     const { username, password } = req.body;
-    const result = await accountServices.login(username, password);
+    const result = await accountService.login(username, password);
      
     if (result.account) {
         //Generate Access Token (JWT) and response
-        const token = accountServices.generateJWT(result.account);
-        res.status(201).json(token);
+        const token = accountService.generateJWT(result.account);
+        res.status(200).json(token);
     } else {
         return next(result.err);
     }
@@ -46,20 +52,24 @@ async refreshToken(req, res, next) {
     //1. est-ce que le refresh est dans la BD et au bon user
     const refreshToken = req.headers.authorization.split(' ')[1];
     const { email } = req.body;
-    const account = await accountServices.validateRefreshToken(email, refreshToken);
+    const account = await accountService.validateRefreshToken(email, refreshToken);
     //Authorization BEARER <token>
     if (account) {
-        const { accessToken } = accountServices.generateJWT(account, false);
+        const { accessToken } = accountService.generateJWT(account, false);
         res.status(201).json({ accessToken });
     } else {
-        await accountServices.logoutRefresh(refreshToken);
+        await accountService.logoutRefresh(refreshToken);
         return next(httpErrors.Unauthorized('Cannot refresh token'));
     }
 }
 
 async logout(req, res, next) {
+    console.log(req);
+ 
     try {
-        await accountServices.logout(req.user.email);
+
+        await accountService.logout(req.user.email);
+        console.log(1);
         res.status(204).end();
     } catch (err) {
         return next(httpErrors.InternalServerError());

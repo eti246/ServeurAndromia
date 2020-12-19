@@ -3,6 +3,7 @@
 // Date : 1 décembre 2020
 
 import crypto from 'crypto';
+import expressJWT from 'express-jwt';
 import jwt from 'jsonwebtoken';
 import httpErrors from 'http-errors';
 import Accounts from '../models/account.js';
@@ -25,6 +26,7 @@ class AccountServices {
     validatePassword(password, account) {
         //Validate de password with hash
         const iteration = parseInt(process.env.HASH_ITERATION, 10);
+ 
         const hash = crypto.pbkdf2Sync(password, account.salt, iteration, 64, 'sha512').toString('base64');
 
         return hash === account.hash;
@@ -36,6 +38,7 @@ class AccountServices {
         //Generate hash
         const hrstart = process.hrtime();
         const iteration = parseInt(process.env.HASH_ITERATION, 10);
+   
         account.hash = crypto.pbkdf2Sync(account.password, account.salt, iteration, 64, 'sha512').toString('base64');
         const hrEnd = process.hrtime(hrstart);
         console.info('Execution time (iteration - %d): %ds %dms', iteration, hrEnd[0], hrEnd[1] / 1000000);
@@ -44,7 +47,9 @@ class AccountServices {
 
     generateJWT(account, needNewRefresh = true) {
         let refreshToken = '';
+
         const accessToken = jwt.sign({ email: account.email }, process.env.JWT_TOKEN_SECRET, { expiresIn: process.env.JWT_TOKEN_LIFE }); //Generate the token
+        
 
         if (needNewRefresh) {
             //Generate refreshToken

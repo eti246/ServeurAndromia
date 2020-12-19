@@ -4,6 +4,8 @@
 
 import express from 'express';
 import cors from 'cors';
+import expressJWT from 'express-jwt';
+import httpErrors from 'http-errors';
 import database from './helper/database.js'
 import errors from './helper/error.js';
 
@@ -13,6 +15,7 @@ import elementsRoute from "./routes/elementsroute.js"
 import explorationRoute from "./routes/explorationroute.js"
 import monsterRoute from "./routes/monsterroute.js"
 import portalRoute from "./routes/portalroute.js"
+import accountRoute from "./routes/accountRoute.js"
 
 const app = express();
 database(app);
@@ -26,6 +29,7 @@ app.use('/monster',monsterRoute)
 app.use('/explorations',explorationRoute)
 app.use('/elements',elementsRoute)
 app.use('/portals',portalRoute)
+app.use('/account',accountRoute)
 app.use('*', errors);
 
 export default app;
