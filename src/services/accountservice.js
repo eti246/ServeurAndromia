@@ -11,6 +11,7 @@ import Accounts from '../models/account.js';
 class AccountServices {
     async login(email, password) {
         const account = await Accounts.findOne({ email: email });
+        
 
         if (!account) {
             return { err: httpErrors.Unauthorized(`Aucun compte existant avec le courriel ${email}`) };
@@ -21,6 +22,17 @@ class AccountServices {
                 return { err: httpErrors.Unauthorized("Erreur d'authentification") };
             }
         }
+    }
+
+   async giveInox() {
+    const account = await Accounts.find();
+
+       account.forEach(element => {
+        element.inox +=2;
+        element.save();
+       });
+         
+       return account;
     }
 
     validatePassword(password, account) {

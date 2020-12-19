@@ -35,8 +35,8 @@ async post(req, res, next) {
 
 
 async login(req, res, next) {
-    const { username, password } = req.body;
-    const result = await accountService.login(username, password);
+    const { email, password } = req.body;
+    const result = await accountService.login(email, password);
      
     if (result.account) {
         //Generate Access Token (JWT) and response

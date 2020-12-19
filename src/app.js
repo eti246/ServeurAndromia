@@ -8,6 +8,8 @@ import expressJWT from 'express-jwt';
 import httpErrors from 'http-errors';
 import database from './helper/database.js'
 import errors from './helper/error.js';
+import cron from 'node-cron';
+
 
 // On importe les routes des modeles.
 import captureRoute from "./routes/captureroute.js"
@@ -17,13 +19,14 @@ import monsterRoute from "./routes/monsterroute.js"
 import portalRoute from "./routes/portalroute.js"
 import accountRoute from "./routes/accountRoute.js"
 
+
 const app = express();
 database(app);
 app.use(cors());
 //Pour comprendre le json
 app.use(express.json());
 
-// Ajout des routes présentes dans SuccursalesRoutes dans notre serveur
+// Ajout des routes présentes  dans notre serveur
 app.use('/capture',captureRoute)
 app.use('/monster',monsterRoute)
 app.use('/explorations',explorationRoute)
