@@ -21,5 +21,5 @@ const monsterSchema = mongoose.Schema(
     {
         collection : 'Monster'
     }
-)
+); monsterSchema.virtual('account',{ref:'Account',localField:'_id',foreignField:'monster',justOne:false});
 export default mongoose.model('Monster', monsterSchema);

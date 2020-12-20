@@ -84,9 +84,11 @@ class AccountsRoutes {
         let compte = await accountService.retriveByIdUser(req.params.idUser);
         let elements = compte.element;
         let monsters = compte.monster;
-        let inventaire = {element:[], monster:[]};
+        let inox = compte.inox;
+        let inventaire = {element:[], monster:[], inox:Number};
         inventaire.element = elements;
         inventaire.monster = monsters;
+        inventaire.inox = inox;
 
         res.status(200).json(inventaire).end();
     }

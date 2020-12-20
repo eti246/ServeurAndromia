@@ -15,7 +15,7 @@ const accountSchema = mongoose.Schema(
         salt: { type: String, required: true },
         refreshToken: { type: String },
         createdDate: { type: Date, default: Date.now },
-        monster:[{  }],
+        monster:[{ type:mongoose.Schema.Types.ObjectId, ref:'Monster' }],
         element: [{
             name: String,
             quantity: Number,
