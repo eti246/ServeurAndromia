@@ -54,9 +54,9 @@ class AccountServices {
                 
               let rnd = lodash.random(2,5);
                 element.quantity += rnd;
-            });        
+            });
             account.save();
-            });        
+            });
            return account;
         }
 
@@ -121,6 +121,12 @@ class AccountServices {
         delete account.__v;
 
         return account;
+    }
+
+    async retriveByIdUser(id)
+    {
+        const compte = await Accounts.findOne({ _id: id });
+        return compte;
     }
 }
 

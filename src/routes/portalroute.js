@@ -23,7 +23,7 @@ class PortalRoute
             }
             else
             {
-                return next(error.BadRequest()); 
+                return next(error.BadRequest());
             }
         }
         catch (err)
