@@ -21,11 +21,13 @@ async post(req, res, next) {
     try {
         let account = await accountService.create(req.body);
         //Generate Access Token (JWT)
-        const { accessToken } = accountService.generateJWT(account);
+        const { accessToken, refreshToken } = accountService.generateJWT(account);
 
         account = account.toObject({ getters: false, virtuals: false });
         account = accountService.transform(account);
         account.accessToken = accessToken;
+        account.refreshToken = refreshToken;
+        console.log(account);
        
         
         res.status(201).json(account);
@@ -33,7 +35,6 @@ async post(req, res, next) {
         return next(httpErrors.InternalServerError(err));
     }
 }
-
 
 async login(req, res, next) {
     const { email, password } = req.body;
@@ -65,10 +66,10 @@ async refreshToken(req, res, next) {
 }
 
 async logout(req, res, next) {
-
+    console.log( req.headers.authorization.split(' ')[1]);
     try {
 
-        await accountService.logout(req.user.email);
+        await accountService.logout(email);
 
         res.status(204).end();
     } catch (err) {

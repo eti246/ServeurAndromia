@@ -24,8 +24,7 @@ import cron from 'node-cron';
    
     
    cron.schedule(' 0 */1 * * *', async function(){ 
-    // fucntion a toute les heures
-    console.log("heure");
+    // function a toute les heures
     const account = await accountService.giveElement(); 
     })
     
