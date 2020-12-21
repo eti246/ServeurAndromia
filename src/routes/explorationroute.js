@@ -36,7 +36,6 @@ class ExplorationRoute
     // et retourne l'exploration en json 
     async explore(req,res,next)
     {
-        console.log(req.user.email)
         try
         {
             // Va chercher le Compte par son id

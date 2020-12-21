@@ -21,7 +21,6 @@ class ExplorationService
     {
         
         let f = await account.find(filter)
-        console.log(f[0]._id)
         const retrieveQuery = Exploration.find({idExplorateur : f[0]._id});
         const countQuery = Exploration.countDocuments(filter);
         //Retour des exploration
