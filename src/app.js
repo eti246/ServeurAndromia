@@ -12,9 +12,8 @@ import cron from 'node-cron';
 
 
 // On importe les routes des modeles.
-import captureRoute from "./routes/captureroute.js"
-import explorationRoute from "./routes/explorationroute.js"
-import monsterRoute from "./routes/monsterroute.js"
+import explorationRoute from "./routes/explorationRoute.js"
+import monsterRoute from "./routes/monsterRoute.js"
 import accountRoute from "./routes/accountRoute.js"
 
 
@@ -25,7 +24,6 @@ app.use(cors());
 app.use(express.json());
 
 // Ajout des routes présentes  dans notre serveur
-app.use('/capture',captureRoute)
 app.use('/monster',monsterRoute)
 app.use('/explorations',explorationRoute)
 app.use('/account',accountRoute)
