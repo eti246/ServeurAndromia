@@ -26,7 +26,7 @@ class AccountsRoutes {
         router.post('/refresh', this.refreshToken); //Pas une route secure, le token est expiré
         // router.get('/secure', authenticateJWT, this.secure);
         router.delete('/deconnexion', authenticateJwt, this.logout);
-        router.get('/inventory', authenticateJwt,  this.getElements);
+        router.get('/inventory', authenticateJwt,  this.getInventory);
     }
 
     async post(req, res, next) {
@@ -90,7 +90,7 @@ class AccountsRoutes {
         }
     }
 
-    async getElements(req, res, next) {
+    async getInventory(req, res, next) {
 
         // Je dois aller chercher les éléments ainsi que la collection de monsters à partir de ce id.
         let compte = await accountService.retriveByIdUser(req.user.email);
