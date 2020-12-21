@@ -7,7 +7,6 @@ import expressJWT from 'express-jwt';
 import jwt from 'jsonwebtoken';
 import httpErrors from 'http-errors';
 import Accounts from '../models/account.js';
-import account from '../models/account.js';
 import  lodash from 'lodash';
 
 
@@ -36,29 +35,23 @@ class AccountServices {
 
    async giveInox() {
     const account = await Accounts.find();
-
        account.forEach(element => {
         element.inox +=2;
         element.save();
-       });
-         
-       return account;
+       });               
     }
 
     async giveElement() {
-        const Listaccount = await Accounts.find();
-    
+        const Listaccount = await Accounts.find();    
         Listaccount.forEach(account => {
-
-            (account.element).forEach(element => {
-                
-              let rnd = lodash.random(2,5);
+            (account.element).forEach(element => {              
+                rnd = lodash.random(2,5);
                 element.quantity += rnd;
             });        
             account.save();
-            });        
-           return account;
-        }
+        });        
+           
+    }
 
     validatePassword(password, account) {
         //Validate de password with hash

@@ -7,6 +7,7 @@ const accountSchema = mongoose.Schema(
         hash: { type: String, required: true },
         salt: { type: String, required: true },
         accessToken: {type: String },
+        location: {type: String, default: "Start"},
         refreshToken: { type: String },
         createdDate: { type: Date, default: Date.now },
         monster:[{ type: mongoose.Schema.Types.ObjectId,

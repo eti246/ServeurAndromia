@@ -19,13 +19,13 @@ import cron from 'node-cron';
     //A chaque 5 minutes le serveur fait la function
     cron.schedule(' */5 * * * *', async function(){ 
     //dans les services des comptes on appelle la fonction qui donne 2 inox a tous les explorateur de la BD
-     const account = await accountService.giveInox();  
+        await accountService.giveInox();  
    });
    
-    
-   cron.schedule(' 0 */1 * * *', async function(){ 
     // function a toute les heures
-    const account = await accountService.giveElement(); 
+   cron.schedule(' 0 */1 * * *', async function(){ 
+    //dans les services des comptes on appelle la fonction qui donne des elements a tous les explorateur de la BD
+        await accountService.giveElement(); 
     })
     
     

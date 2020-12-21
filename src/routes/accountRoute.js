@@ -8,13 +8,24 @@ import accountService from '../services/accountService.js';
 
 const router = express.Router();
 
+//JWT middleware
+const authenticateJwt = expressJWT({
+    secret: process.env.JWT_TOKEN_SECRET,
+    algorithms: ["HS256"]
+});
+
+const authenticateRefreshJwt = expressJWT({
+    secret: process.env.JWT_REFRESH_SECRET,
+    algorithms: ["HS256"]
+});
+
 class AccountsRoutes {
 constructor() {
     router.post('/creationCompte', this.post);
     router.post('/', this.login);
     router.post('/refresh', this.refreshToken); //Pas une route secure, le token est expiré
    // router.get('/secure', authenticateJWT, this.secure);
-    router.delete('/deconnexion' ,this.logout);
+    router.delete('/deconnexion', authenticateJwt  ,this.logout);
 }
 
 async post(req, res, next) {
@@ -27,7 +38,7 @@ async post(req, res, next) {
         account = accountService.transform(account);
         account.accessToken = accessToken;
         account.refreshToken = refreshToken;
-        console.log(account);
+
        
         
         res.status(201).json(account);
@@ -66,10 +77,11 @@ async refreshToken(req, res, next) {
 }
 
 async logout(req, res, next) {
-    console.log( req.headers.authorization.split(' ')[1]);
-    try {
+    
 
-        await accountService.logout(email);
+
+    try {
+        await accountService.logout(req.user.email);
 
         res.status(204).end();
     } catch (err) {
