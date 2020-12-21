@@ -9,6 +9,7 @@ import httpErrors from 'http-errors';
 import Accounts from '../models/account.js';
 import account from '../models/account.js';
 import  lodash from 'lodash';
+import ExplorationService from '../services/explorationService.js'
 
 
 const elements = [{name :"A", quantity: 0 },{name :"B", quantity: 0 } ,{name :"E", quantity: 0 }
@@ -121,6 +122,38 @@ class AccountServices {
         delete account.__v;
 
         return account;
+    }
+    //ED: retourne un user par son id
+    retriveById(Id,retriveOption)
+    {
+        const RetrieveQuery = account.findById(Id)
+        return RetrieveQuery;
+    }
+    //ED: Ajoute les elements au compte
+    async addElement(compte, Exploration)
+    {
+        // ED:Valide que l'exploration avait des elements
+        if(!ExplorationService.validateExplorationElement(Exploration))
+        {
+            //ED: Pour chaque element du compte
+            compte.element.forEach(item=>{
+                //ED: Pour chaque element de l<exploration
+                Exploration.vault.elements.forEach(elem=>{
+                    //ED: Si les élements sont les même 
+                    if(elem.element == item.name)
+                    {
+                        //ED: Modification des quantite
+                        item.quantity +=elem.quantity
+                    }
+                })
+            })    
+            //ED: Filtre
+            const filter = { _id: compte._id };     
+            //ED: Update du compte
+            await account.findOneAndUpdate(filter, compte);//ED      
+        }
+       
+
     }
 }
 

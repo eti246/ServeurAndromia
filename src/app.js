@@ -16,7 +16,6 @@ import captureRoute from "./routes/captureroute.js"
 import elementsRoute from "./routes/elementsroute.js"
 import explorationRoute from "./routes/explorationroute.js"
 import monsterRoute from "./routes/monsterroute.js"
-import portalRoute from "./routes/portalroute.js"
 import accountRoute from "./routes/accountRoute.js"
 
 
@@ -31,7 +30,6 @@ app.use('/capture',captureRoute)
 app.use('/monster',monsterRoute)
 app.use('/explorations',explorationRoute)
 app.use('/elements',elementsRoute)
-app.use('/portals',portalRoute)
 app.use('/account',accountRoute)
 app.use('*', errors);
 
