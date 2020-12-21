@@ -94,13 +94,12 @@ class AccountsRoutes {
 
         // Je dois aller chercher les éléments ainsi que la collection de monsters à partir de ce id.
         let compte = await accountService.retriveByIdUser(req.user.email);
-        let elements = compte.element;
-        let monsters = compte.monster;
-        let inox = compte.inox;
-        let inventaire = {element:[], monster:[], inox:Number};
-        inventaire.element = elements;
-        inventaire.monster = monsters;
-        inventaire.inox = inox;
+
+        let inventaire = {element:[], monster:[], inox:Number, location:String };
+        inventaire.element = compte.element;
+        inventaire.monster = compte.monsters;
+        inventaire.inox = compte.inox;
+        inventaire.location = compte.location;
 
         res.status(200).json(inventaire).end();
     }
