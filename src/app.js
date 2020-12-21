@@ -28,7 +28,6 @@ app.use(express.json());
 app.use('/capture',captureRoute)
 app.use('/monster',monsterRoute)
 app.use('/explorations',explorationRoute)
-
 app.use('/account',accountRoute)
 app.use('*', errors);
 

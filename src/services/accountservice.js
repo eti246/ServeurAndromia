@@ -119,7 +119,7 @@ class AccountServices {
     //ED: retourne un user par son id
     retriveById(Id,retriveOption)
     {
-        const RetrieveQuery = account.findById(Id)
+        const RetrieveQuery = Accounts.findById(Id)
         return RetrieveQuery;
     }
     //ED: Ajoute les elements au compte
@@ -143,7 +143,7 @@ class AccountServices {
             //ED: Filtre
             const filter = { _id: compte._id };     
             //ED: Update du compte
-            await account.findOneAndUpdate(filter, compte);//ED      
+            await Accounts.findOneAndUpdate(filter, compte);//ED      
         }
        
 
