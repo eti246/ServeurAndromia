@@ -119,12 +119,13 @@ class AccountServices {
     //ED: retourne un user par son id
     retriveById(Id,retriveOption)
     {
-        const RetrieveQuery = Accounts.findById(Id)
+        const RetrieveQuery = Accounts.findOne({email:Id})
         return RetrieveQuery;
     }
     //ED: Ajoute les elements au compte
     async addElement(compte, Exploration)
     {
+        
         // ED:Valide que l'exploration avait des elements
         if(!ExplorationService.validateExplorationElement(Exploration))
         {
@@ -140,6 +141,8 @@ class AccountServices {
                     }
                 })
             })    
+            if(typeof Exploration.vault.inox !== 'undefined')
+                compte.inox += Exploration.vault.inox
             //ED: Filtre
             const filter = { _id: compte._id };     
             //ED: Update du compte

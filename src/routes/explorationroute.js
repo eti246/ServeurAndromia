@@ -8,22 +8,26 @@ import axios from'axios';
 import ExplorationService from "../services/explorationService.js"
 import exploration from '../models/exploration.js';
 import _ from 'lodash';
-import Account from '../models/account.js'
+import expressJWT from 'express-jwt';
+
 import AccountService from '../services/accountService.js'
-import account from '../models/account.js';
 // On fait le routage.
 const router = express.Router();
 
-
+//JWT middleware
+const authenticateJwt = expressJWT({
+    secret: process.env.JWT_TOKEN_SECRET,
+    algorithms: ["HS256"]
+});
 
 class ExplorationRoute
 {
 
     constructor()
     {
-        router.get('/explore/:idExplorateur/:CodeQr',this.explore)// Fait une exploration
-        router.get('/:idExplorateur',this.getExploration) // Va chercher les exploration faire par l'utilisateur
-        router.get('/one/:idExploration',this.getOne) // Va chercher une exploration selon son id
+        router.get('/:CodeQr',authenticateJwt,this.explore)// Fait une exploration
+        router.get('/',authenticateJwt,this.getExploration) // Va chercher les exploration faire par l'utilisateur
+        router.get('/one/:idExploration',authenticateJwt,this.getOne) // Va chercher une exploration selon son id
     }
 
     
@@ -32,15 +36,15 @@ class ExplorationRoute
     // et retourne l'exploration en json 
     async explore(req,res,next)
     {
-        
+        console.log(req.user.email)
         try
         {
             // Va chercher le Compte par son id
-            let e = await AccountService.retriveById(req.params.idExplorateur,{})
+            let e = await AccountService.retriveById(req.user.email)
             //Utilise axios pour aller faire un exploration selon le code QR
             axios.get("https://api.andromia.science/portals/"+req.params.CodeQr).then(responce=>{
                 //Peuple responce avec les information de l'exploration
-                responce.data.idExplorateur =req.params.idExplorateur
+                responce.data.idExplorateur =e.id
                 responce.data.hrer =`${process.env.BASE_URL}/explorations/one/${responce.data._id}`
                 exploration.create(responce.data);
                 //Rajoute les elements dans le compte du users
@@ -68,7 +72,7 @@ class ExplorationRoute
         try
         {
             //Va chercher l'exploration choisie
-            let temp = await ExplorationService.getOne(req.params.idExploration,{})
+            let temp = await ExplorationService.getOne(req.user.email,{})
             
             //Rajoute un lien ver sois meme
             temp.href =temp.href =`${process.env.BASE_URL}/explorations/one/${temp._id}`
@@ -88,7 +92,7 @@ class ExplorationRoute
         try
         {
             //Filtre
-            let filter = {idExplorateur: `${req.params.idExplorateur}`};
+            let filter = {email: req.user.email};
             //Va chercher les exploration
             let [temp,t] = await ExplorationService.retriveByIdUser(filter,{}) 
             let e =[]  
