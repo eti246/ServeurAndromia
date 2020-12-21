@@ -146,6 +146,7 @@ class AccountServices {
             //ED: Filtre
             const filter = { _id: compte._id };     
             //ED: Update du compte
+            compte.location = Exploration.destination
             await Accounts.findOneAndUpdate(filter, compte);//ED      
         }
        
