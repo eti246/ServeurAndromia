@@ -46,7 +46,7 @@ class AccountServices {
         const Listaccount = await Accounts.find();    
         Listaccount.forEach(account => {
             (account.element).forEach(element => {              
-                rnd = lodash.random(2,5);
+                let rnd = lodash.random(2,5);
                 element.quantity += rnd;
             });        
             account.save();
@@ -150,6 +150,12 @@ class AccountServices {
         }
        
 
+    }
+
+    async retriveByIdUser(Email)
+    {
+        const compte = await Accounts.findOne({ email: Email });
+        return compte;
     }
 }
 
